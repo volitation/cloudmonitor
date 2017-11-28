@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.ylp.cloudmonitor</groupId>
+		<artifactId>ylp-cloudmonitor-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<!-- <groupId>com.ylp.cloudmonitor</groupId> -->
+	<artifactId>ylp-cloudmonitor-common</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	
+	<properties>  
+	<!-- maven.test.skip 打包忽略单元测试 -->
+<!--     <maven.test.skip>true</maven.test.skip>  
+ -->	</properties> 
+
+<profiles>
+		<profile>
+			<!-- 本地开发环境 -->
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+				<ver>0.0.1-SNAPSHOT</ver>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>test</id>
+			<properties>
+				<env>test</env>
+				<ver>0.0.1-SNAPSHOT</ver>
+			</properties>
+		</profile>
+		<profile>
+			<!-- qa环境 -->
+			<id>qa</id>
+			<properties>
+				<env>qa</env>
+				<ver>0.0.1-SNAPSHOT</ver>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 生产环境 -->
+			<id>pro</id>
+			<properties>
+				<env>pro</env>
+				<ver>0.0.1-SNAPSHOT</ver>
+			</properties>
+		</profile>
+	</profiles>
+	
+<build>
+		
+		<resources>
+			
+			
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			
+
+			<!-- 根据env部署环境值，把对应环境的配置文件拷贝到classes目录 -->
+			<resource>
+				<directory>deployEnv/${env}</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<filtering>true</filtering>
+			</resource>
+
+		</resources>
+
+	</build>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${elasticsearch-version}</version>
+		</dependency>
+		
+
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-to-slf4j</artifactId>
+			<version>${log4j-to-slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${self4j-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${self4j-version}</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>4.8.2</version> <scope>test</scope> </dependency> -->
+
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>${json-lib-version}</version>
+			<classifier>jdk15</classifier>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		
+		
+		
+	</dependencies>
+	
+	
+
+</project>
